@@ -20,14 +20,14 @@ import java.util.List;
 public class Client {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "name")
     private String name;
 
+    @Column(name = "pass_code")
     private Integer passCode;
-
-    private BigInteger balance;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
     @OnDelete(action = OnDeleteAction.CASCADE)

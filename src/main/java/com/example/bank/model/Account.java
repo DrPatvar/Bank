@@ -18,9 +18,10 @@ import java.math.BigInteger;
 public class Account {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "balance")
     private BigInteger balance;
 
     @ManyToOne(fetch = FetchType.LAZY)
