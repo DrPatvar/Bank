@@ -6,8 +6,6 @@ import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.math.BigInteger;
-
 @Entity
 @Table(name = "account")
 @Data
@@ -22,8 +20,6 @@ public class Account {
     private Integer id;
 
     @Column(name = "balance")
-    private BigInteger balance;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
