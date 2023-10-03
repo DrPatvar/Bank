@@ -1,6 +1,6 @@
 package com.example.bank.service;
 
-import com.example.bank.Util.SecurityUtil;
+import com.example.bank.util.SecurityUtil;
 import com.example.bank.model.Account;
 import com.example.bank.model.Client;
 import com.example.bank.repository.AccountRepository;

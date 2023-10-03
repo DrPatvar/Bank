@@ -1,9 +1,7 @@
-package com.example.bank.Controller;
+package com.example.bank.controller;
 
-import com.example.bank.Util.SecurityUtil;
 import com.example.bank.error.IllegalRequestDataException;
 import com.example.bank.model.Account;
-import com.example.bank.model.Client;
 import com.example.bank.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

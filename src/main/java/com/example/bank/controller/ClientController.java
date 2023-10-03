@@ -1,4 +1,4 @@
-package com.example.bank.Controller;
+package com.example.bank.controller;
 
 import com.example.bank.error.IllegalRequestDataException;
 import com.example.bank.model.Client;

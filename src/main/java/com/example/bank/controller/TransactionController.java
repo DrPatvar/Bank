@@ -1,12 +1,12 @@
-package com.example.bank.Controller;
+package com.example.bank.controller;
 
-import com.example.bank.Util.SecurityUtil;
 import com.example.bank.error.IllegalRequestDataException;
 import com.example.bank.model.Account;
 import com.example.bank.model.Transaction;
 import com.example.bank.repository.AccountRepository;
 import com.example.bank.repository.ClientRepository;
 import com.example.bank.repository.TransactionRepository;
+import com.example.bank.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -52,7 +52,7 @@ public class TransactionController {
         }
 
         switch (transaction.getTypeOperation()) {
-            case DEPOSIT-> {
+            case DEPOSIT -> {
                 balanceFirst += amount;
                 accountFirst.setBalance(balanceFirst);
                 accountRepository.save(accountFirst);
@@ -67,7 +67,7 @@ public class TransactionController {
                 accountRepository.save(accountFirst);
                 transaction.setTypeOperation(WITHDRAW);
             }
-            case TRANSFER-> {
+            case TRANSFER -> {
                 Account accountSecond = accountRepository.get(transaction.getAccountId2(), clientId);
                 Double balanceSecond = accountSecond.getBalance();
                 if (balanceFirst <= amount) {
@@ -85,7 +85,7 @@ public class TransactionController {
         Transaction created = transactionRepository.save(transaction);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL).build().toUri();
-        return ResponseEntity.created(uriOfNewResource).body(transaction);
+        return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
 

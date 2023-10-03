@@ -1,4 +1,4 @@
-package com.example.bank.Util;
+package com.example.bank.util;
 
 import lombok.NoArgsConstructor;
 
