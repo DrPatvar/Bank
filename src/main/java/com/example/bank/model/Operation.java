@@ -1,7 +1,12 @@
 package com.example.bank.model;
 
 public enum Operation {
-    DEPOSIT,
+    DEPOSIT(),
     WITHDRAW,
     TRANSFER;
+
+    @Override
+    public String toString() {
+        return name();
+    }
 }

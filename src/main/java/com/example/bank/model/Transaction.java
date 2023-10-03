@@ -20,7 +20,7 @@ public class Transaction {
     private Integer id;
 
     @Column(name = "name")
-    private Operation name;
+    private String typeOperation;
 
     @Column(name = "amount")
     private Double amount;
