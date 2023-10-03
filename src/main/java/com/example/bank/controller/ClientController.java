@@ -3,6 +3,7 @@ package com.example.bank.controller;
 import com.example.bank.error.IllegalRequestDataException;
 import com.example.bank.model.Client;
 import com.example.bank.repository.ClientRepository;
+import com.example.bank.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -41,11 +42,19 @@ public class ClientController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
+        int authClientId = SecurityUtil.authClientId();
+        if (id!=authClientId){
+            throw new IllegalRequestDataException("No access");
+        }
         clientRepository.deleteById(id);
     }
 
     @GetMapping("/{id}")
     public Client get(@PathVariable int id) {
+        int authClientId = SecurityUtil.authClientId();
+        if (id!=authClientId){
+            throw new IllegalRequestDataException("No access");
+        }
         return clientRepository.get(id);
     }
 }

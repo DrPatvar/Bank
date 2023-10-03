@@ -1,5 +1,6 @@
 package com.example.bank.service;
 
+import com.example.bank.error.IllegalRequestDataException;
 import com.example.bank.util.SecurityUtil;
 import com.example.bank.model.Account;
 import com.example.bank.model.Client;
@@ -17,12 +18,19 @@ public class AccountService {
 
     public Account get(int id) {
         int authClientId = SecurityUtil.authClientId();
-        return accountRepository.get(id, authClientId);
+        Account account = accountRepository.get(id, authClientId);
+        if(account == null){
+          throw new IllegalRequestDataException("This is not your account");
+        }
+        return account;
     }
 
     public void delete(int id) {
         int authClientId = SecurityUtil.authClientId();
-        accountRepository.deleteByIdAndClient_Id(id, authClientId);
+        if (accountRepository.get(id, authClientId) == null){
+                throw new IllegalRequestDataException("This is not your account");
+        }
+        accountRepository.deleteById(id);
     }
 
     public Account save(Account account) {

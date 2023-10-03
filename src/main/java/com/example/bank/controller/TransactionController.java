@@ -39,9 +39,9 @@ public class TransactionController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Transaction> register(@RequestBody Transaction transaction) {
         int clientId = SecurityUtil.authClientId();
-        Integer clientCode = SecurityUtil.authClientPassCode();
-        Integer clientDbCode = clientRepository.get(SecurityUtil.authClientId()).getPassCode();
-        if (!clientCode.equals(clientDbCode)) {
+        int passCode = SecurityUtil.authClientPassCode();
+        int clientDbCode = clientRepository.get(transaction.getClientId()).getPassCode();
+        if (passCode != clientDbCode) {
             throw new IllegalRequestDataException("pin code is not correct");
         }
         Account accountFirst = accountRepository.get(transaction.getAccountId1(), clientId);
@@ -69,7 +69,7 @@ public class TransactionController {
             }
             case TRANSFER -> {
                 Account accountSecond = accountRepository.get(transaction.getAccountId2(), clientId);
-                Double balanceSecond = accountSecond.getBalance();
+                double balanceSecond = accountSecond.getBalance();
                 if (balanceFirst <= amount) {
                     throw new IllegalRequestDataException("there are not enough funds in the account");
                 }
