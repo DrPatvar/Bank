@@ -25,9 +25,6 @@ public class AccountService {
     }
 
     public Account save(Account account) {
-        if(account.getId()!=null){
-
-        }
         int authClientId = SecurityUtil.authClientId();
         return accountRepository.save(account);
     }

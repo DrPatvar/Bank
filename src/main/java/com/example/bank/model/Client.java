@@ -1,5 +1,6 @@
 package com.example.bank.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
@@ -30,7 +31,11 @@ public class Client {
     private Integer passCode;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
+    @JsonIgnore
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Account> accounts;
 
+    public Client(Integer id) {
+        this.id = id;
+    }
 }

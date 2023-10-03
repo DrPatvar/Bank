@@ -45,7 +45,7 @@ public class ClientController {
 
     @GetMapping("/{id}")
     public Client get(@PathVariable int id){
-        return clientRepository.getById(id);
+        return clientRepository.get(id);
     }
 
 

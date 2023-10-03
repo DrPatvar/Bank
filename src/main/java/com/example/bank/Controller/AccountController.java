@@ -1,6 +1,8 @@
 package com.example.bank.Controller;
 
+import com.example.bank.Util.SecurityUtil;
 import com.example.bank.model.Account;
+import com.example.bank.model.Client;
 import com.example.bank.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,10 +45,11 @@ public class AccountController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Account> register(@RequestBody Account account) {
+        Client client = new Client(SecurityUtil.authClientId());
         if (account.getId() != null) {
             ResponseEntity.status(HttpStatus.CONFLICT);
         }
-
+        account.setClient(client);
         Account created = accountService.save(account);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL).build().toUri();

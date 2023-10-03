@@ -20,6 +20,8 @@ public class Account {
     private Integer id;
 
     @Column(name = "balance")
+    private double balance;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)

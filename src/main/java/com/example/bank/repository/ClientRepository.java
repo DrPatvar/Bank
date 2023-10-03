@@ -13,4 +13,7 @@ public interface ClientRepository extends JpaRepository<Client, Integer> {
     @Query(value = "SELECT c FROM Client c")
     List<Client> getAll();
 
+    @Query("SELECT c FROM Client c WHERE c.id = :id")
+    Client get(int id);
+
 }
