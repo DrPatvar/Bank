@@ -35,12 +35,13 @@ public class TransactionController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Transaction> register(@RequestBody Transaction transaction) {
+        Integer clientId = SecurityUtil.authClientId();
         Integer clientCode = SecurityUtil.authClientPassCode();
         Integer clientDbCode = clientRepository.get(SecurityUtil.authClientId()).getPassCode();
         if (!clientCode.equals(clientDbCode)){
             throw new IllegalRequestDataException("pin code is not correct");
         }
-        Account accountFirst =  accountRepository.get(transaction.getAccountId1());
+        Account accountFirst =  accountRepository.get(transaction.getAccountId1(), clientId);
         Double balanceFirst = accountFirst.getBalance();
         Double amount = transaction.getAmount();
         if (transaction.getId() != null) {
@@ -54,10 +55,8 @@ public class TransactionController {
                 accountRepository.save(accountFirst);
                 transaction.setName(Operation.DEPOSIT);
             }
-
-
             case WITHDRAW -> {
-                if (balanceFirst < amount) {
+                if (balanceFirst <= amount) {
                     throw new IllegalRequestDataException("there are not enough funds in the account");
                 }
                 balanceFirst-= amount;
@@ -66,9 +65,9 @@ public class TransactionController {
                 transaction.setName(Operation.WITHDRAW);
             }
             case TRANSFER ->{
-                Account accountSecond = accountRepository.get(transaction.getAccountId2());
+                Account accountSecond = accountRepository.get(transaction.getAccountId2(), clientId);
                 Double balanceSecond = accountSecond.getBalance();
-                if (balanceFirst < amount) {
+                if (balanceFirst <= amount) {
                     throw new IllegalRequestDataException("there are not enough funds in the account");
                 }
                 balanceFirst -= amount;

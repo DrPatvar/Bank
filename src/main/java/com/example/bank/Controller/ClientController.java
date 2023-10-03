@@ -1,5 +1,6 @@
 package com.example.bank.Controller;
 
+import com.example.bank.error.IllegalRequestDataException;
 import com.example.bank.model.Client;
 import com.example.bank.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class ClientController {
     protected ClientRepository clientRepository;
 
     @GetMapping
-    public List<Client> getAll(){
+    public List<Client> getAll() {
         return clientRepository.getAll();
     }
 
@@ -29,7 +30,7 @@ public class ClientController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Client> register(@RequestBody Client client) {
         if (client.getId() != null) {
-            ResponseEntity.status(HttpStatus.CONFLICT);
+            throw new IllegalRequestDataException("the client's ID is not null");
         }
         Client created = clientRepository.save(client);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -44,10 +45,7 @@ public class ClientController {
     }
 
     @GetMapping("/{id}")
-    public Client get(@PathVariable int id){
+    public Client get(@PathVariable int id) {
         return clientRepository.get(id);
     }
-
-
-
 }

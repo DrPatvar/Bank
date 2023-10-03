@@ -31,7 +31,6 @@ public class Client {
     private Integer passCode;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
-    @JsonIgnore
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Account> accounts;
 

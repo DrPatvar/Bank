@@ -1,6 +1,7 @@
 package com.example.bank.Controller;
 
 import com.example.bank.Util.SecurityUtil;
+import com.example.bank.error.IllegalRequestDataException;
 import com.example.bank.model.Account;
 import com.example.bank.model.Client;
 import com.example.bank.service.AccountService;
@@ -37,19 +38,13 @@ public class AccountController {
         accountService.delete(id);
     }
 
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void updateAccount(@RequestBody Account account, @PathVariable int id) {
-        accountService.update(account, id);
-    }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Account> register(@RequestBody Account account) {
-        Client client = new Client(SecurityUtil.authClientId());
         if (account.getId() != null) {
-            ResponseEntity.status(HttpStatus.CONFLICT);
+            throw new IllegalRequestDataException("the client's ID is not null");
         }
-        account.setClient(client);
         Account created = accountService.save(account);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL).build().toUri();
