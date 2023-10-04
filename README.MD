@@ -1,10 +1,10 @@
-    REST BANK Operation using Hibernate/Spring.
+REST BANK Operation using Hibernate/Spring.
 Stack
 Spring Boot, Spring Data JPA, Hibernate, Lombok, H2, Spring Data REST
 
-    Application is available at : Bank
+Application is available at : Bank
 
-    Technical requirement:
+Technical requirement:
 
 Design and implement a RESTful API, backing service and data model to create bank accounts
 and transfer money between them. Interaction with API will be using HTTP requests.
@@ -17,7 +17,7 @@ Requirements
 • Use in-memory database as a backing store.
 
 
-    Recommendations
+Recommendations
 • Use any technologies you feel comfortable with, but it is recommended you set up
 your project using Spring Boot.
 • Make use of best practices when implementing your code to ensure a high-quality
@@ -27,7 +27,7 @@ to add authorization layers.
 
 http://localhost:8080/api/explorer
 
-    Authorized user parameters:
+Authorized user parameters:
 
 util/SecurityUtil
 
