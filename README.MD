@@ -35,6 +35,10 @@ clientId = 1
 
 passCode = 1234
 
+swagger
+
+http://localhost:8080/swagger-ui/index.html
+
 curl samples
 
 All the accounts: the name their current balance
